@@ -25,22 +25,111 @@ namespace Module5_HW1_15082023
             }
         }
 
-        public static async Task Create(string urlParameters)
+        public static async Task Post(List<Worker> worker, string urlParameters)
         {
-            var jobParam = new
-            {
-                name = "morpheus",
-                job = "leader",
-            };
-
             using (var httpClient = new HttpClient())
             {
                 var context = new StringContent(
-                    JsonConvert.SerializeObject(jobParam),
+                    JsonConvert.SerializeObject(worker),
                     Encoding.UTF8,
                     "application/json");
 
-                var res = await httpClient.PostAsync($"{URL}{urlParameters}", context);
+                var res = await httpClient.PostAsync(
+                    $"{URL}{urlParameters}", context);
+
+                if (res.StatusCode == HttpStatusCode.Created)
+                {
+                    var contextRes = await res.Content.ReadAsStringAsync();
+                }
+            }
+        }
+
+        public static async Task Post(List<NewUser> worker, string urlParameters)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var context = new StringContent(
+                    JsonConvert.SerializeObject(worker),
+                    Encoding.UTF8,
+                    "application/json");
+
+                var res = await httpClient.PostAsync(
+                    $"{URL}{urlParameters}", context);
+
+                if (res.StatusCode == HttpStatusCode.Created)
+                {
+                    var contextRes = await res.Content.ReadAsStringAsync();
+                }
+            }
+        }
+
+        public static async Task Post(string email, string urlParameters)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var context = new StringContent(
+                    JsonConvert.SerializeObject(email),
+                    Encoding.UTF8,
+                    "application/json");
+
+                var res = await httpClient.PostAsync(
+                    $"{URL}{urlParameters}", context);
+
+                if (res.StatusCode == HttpStatusCode.Created)
+                {
+                    var contextRes = await res.Content.ReadAsStringAsync();
+                }
+            }
+        }
+
+        public static async Task Put(List<Worker> worker, string urlParameters)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var context = new StringContent(
+                    JsonConvert.SerializeObject(worker),
+                    Encoding.UTF8,
+                    "application/json");
+
+                var res = await httpClient.PutAsync(
+                    $"{URL}{urlParameters}", context);
+
+                if (res.StatusCode == HttpStatusCode.OK)
+                {
+                    var contextRes = await res.Content.ReadAsStringAsync();
+                }
+            }
+        }
+
+        public static async Task Patch(List<Worker> worker, string urlParameters)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var context = new StringContent(
+                    JsonConvert.SerializeObject(worker),
+                    Encoding.UTF8,
+                    "application/json");
+
+                var res = await httpClient.PatchAsync(
+                    $"{URL}{urlParameters}", context);
+
+                if (res.StatusCode == HttpStatusCode.OK)
+                {
+                    var contextRes = await res.Content.ReadAsStringAsync();
+                }
+            }
+        }
+
+        public static async Task Delete(string urlParameters)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var res = await httpClient.DeleteAsync($"{URL}{urlParameters}");
+
+                if (res.StatusCode != HttpStatusCode.NoContent)
+                {
+                    var contextRes = await res.Content.ReadAsStringAsync();
+                }
             }
         }
     }
